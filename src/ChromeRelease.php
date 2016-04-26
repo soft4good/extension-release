@@ -1,53 +1,54 @@
 <?php
-  namespace Soft4Good\ExtensionRelease;
 
-	class Chrome extends Release implements ReleaseInterface
+namespace Soft4Good\ExtensionRelease;
+
+class Chrome extends Release implements ReleaseInterface
+{
+  public function __construct( $releaseData = null )
   {
-    public function __construct( $releaseData = null )
-    {
-      parent::__construct( $releaseData );
+    parent::__construct( $releaseData );
+  }
+
+  protected function setVersion( $version )
+  {
+    $this->version = $version;
+  }
+
+  public function create()
+  {
+    // read manifest.json
+    $manifestPath = $this->path . "/manifest.json";
+    try {
+      $manifest = json_decode( $manifestPath );
+    }
+    catch( \Exception $exception ) {
+      throw new \Exception( "manifest.json file is not found or corrupted...\n" . $exception->getMessage() );
     }
 
-    protected function setVersion( $version )
-    {
-      $this->version = $version;
+    // update manifest version
+    if ( !$this->version ) {
+      $this->version = $manifest['version'] || '';
+      $manifest['version'] = $this->autoIncrementVersion();
     }
 
-    public function create()
-    {
-      // read manifest.json
-      $manifestPath = $this->path . "/manifest.json";
-      try {
-        $manifest = json_decode( $manifestPath );
-      }
-      catch( \Exception $exception ) {
-        throw new \Exception( "manifest.json file is not found or corrupted...\n" . $exception->getMessage() );
-      }
+    // write manifest.json
+    $fpManifest = fopen( $manifestPath, 'w+' );
+    fwrite( $manifest, \NiceJSON::format( json_encode( $manifest ) ) );
+    fclose( $fpManifest );
 
-      // update manifest version
-      if ( !$this->version ) {
-        $this->version = $manifest['version'] || '';
-        $manifest['version'] = $this->autoIncrementVersion();
-      }
+    // copy files to release folder
+    $this->prepareDir();
 
-      // write manifest.json
-      $fpManifest = fopen( $manifestPath, 'w+' );
-      fwrite( $manifest, \NiceJSON::format( json_encode( $manifest ) ) );
-      fclose( $fpManifest );
+    // pack JS and CSS
+    $this->packCSS();
+    $this->packJS();
+  }
 
-      // copy files to release folder
-      $this->prepareDir();
+  // getters / setters
+  public function setJS( $js )   { $this->js  = $js; }
+  public function setCSS( $css ) { $this->css = $css; }
 
-      // pack JS and CSS
-      $this->packCSS();
-      $this->packJS();
-    }
+  public function addJS( $js )   { $this->js  = array_merge( $this->js,  $js ); }
+  public function addCSS( $css ) { $this->css = array_merge( $this->css, $css ); }
 
-    // getters / setters
-    public function setJS( $js )   { $this->js  = $js; }
-    public function setCSS( $css ) { $this->css = $css; }
-
-    public function addJS( $js )   { $this->js  = array_merge( $this->js,  $js ); }
-    public function addCSS( $css ) { $this->css = array_merge( $this->css, $css ); }
-
-  } // Soft4Good\ExtensionRelease\Chrome
+} // Soft4Good\ExtensionRelease\Chrome
