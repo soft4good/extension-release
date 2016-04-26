@@ -55,9 +55,9 @@ abstract class Release
   }
 
   // http://php.net/manual/de/function.copy.php
-  private function recurse_copy( $src,$dst ) {
+  private function recurse_copy( $src,$dst ) { // TODO: refactor this...
     $dir = opendir($src);
-    @mkdir($dst);
+    mkdir($dst);
     while(false !== ( $file = readdir($dir)) ) {
       if (( $file != '.' ) && ( $file != '..' )) {
         if ( is_dir($src . '/' . $file) ) {
