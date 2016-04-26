@@ -1,7 +1,7 @@
 ExtensionRelease [UNDER DEVELOPMENT]
 ==========
 
-A PHP class for creating browser extension releases.
+A package to automate browser extension releases.
 
 ***Only Chrome is currently supported.***
 
