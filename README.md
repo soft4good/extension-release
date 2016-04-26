@@ -20,7 +20,6 @@ Simply run `composer require soft4good/extension-release`.
 
 ```php
 <?php
-	require 'vendor/autoload.php';
-
-	$oRelease = Soft4Good\ExtensionRelease\Factory::create( './release.json' ); // see release.json file...
+  require 'vendor/autoload.php';
+  $oRelease = Soft4Good\ExtensionRelease\Factory::create( './release.json' ); // see release.json file...
 ```
