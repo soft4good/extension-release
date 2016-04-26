@@ -1,0 +1,13 @@
+{
+	"chrome": {
+		"path": "./chrome",
+		"js": [
+			"js/bg.js", 
+			"js/popup.js"
+		],
+		"css": [],
+		"version": null
+	},
+	"firefox": {},
+	"safari": {}
+}
