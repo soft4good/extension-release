@@ -16,7 +16,7 @@ A PHP class for creating browser extension releases.
 
 Simply run `composer require reis4g/extension-release`.
 
-## Usage (slightly changed from previous used implementation!)
+## Usage
 
 ```php
 <?php
