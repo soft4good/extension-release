@@ -1,4 +1,4 @@
-extension-release [UNDER DEVELOPMENT]
+ExtensionRelease [UNDER DEVELOPMENT]
 ==========
 
 A PHP class for creating browser extension releases.
