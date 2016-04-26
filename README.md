@@ -14,7 +14,7 @@ A PHP class for creating browser extension releases.
 
 ## Installation
 
-Simply run `composer require reis4g/extension-release`.
+Simply run `composer require soft4good/extension-release`.
 
 ## Usage
 
@@ -22,5 +22,5 @@ Simply run `composer require reis4g/extension-release`.
 <?php
 	require 'vendor/autoload.php';
 
-	$oRelease = new ExtensionRelease( './release.json' ); // see release.json file...
+	$oRelease = Soft4Good\ExtensionRelease\Factory::create( './release.json' ); // see release.json file...
 ```

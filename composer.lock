@@ -1,0 +1,70 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "938559a7dbeed4c02b737eadd3924d84",
+    "content-hash": "e08e49224d9f7b548fed757ba4067ba9",
+    "packages": [
+        {
+            "name": "tholu/php-packer",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tholu/php-packer.git",
+                "reference": "c205c9f471ffe93cb20e0b281ef49f55cc1a65a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tholu/php-packer/zipball/c205c9f471ffe93cb20e0b281ef49f55cc1a65a4",
+                "reference": "c205c9f471ffe93cb20e0b281ef49f55cc1a65a4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tholu\\Packer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Lutz",
+                    "email": "thomaslutz.de@gmail.com"
+                },
+                {
+                    "name": "Dean Edwards"
+                },
+                {
+                    "name": "Nicolas Martin"
+                }
+            ],
+            "description": "A PHP version of Packer, JavaScript obfuscation library originally created by Dean Edwards",
+            "homepage": "https://github.com/tholu/php-packer",
+            "keywords": [
+                "JS",
+                "javascript",
+                "minification",
+                "minify",
+                "obfuscate",
+                "uglify"
+            ],
+            "time": "2015-11-18 12:40:36"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

@@ -1,12 +1,15 @@
 {
 	"chrome": {
+		"releases_path": "./_releases/chrome",
+		"name": "my-extension",
 		"path": "./chrome",
+		"version": null,
 		"js": [
 			"js/bg.js", 
 			"js/popup.js"
 		],
 		"css": [],
-		"version": null
+		"excludes": []
 	},
 	"firefox": {},
 	"safari": {}
