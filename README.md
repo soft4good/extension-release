@@ -7,6 +7,7 @@ A PHP class for creating browser extension releases.
 
 ## Features
 
+- Reads and use a release recipe from release.json files
 - Packs/Obfuscate JS files
 - Changes version in manifest files
 - Creates a folder with the release
