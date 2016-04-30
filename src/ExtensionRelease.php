@@ -4,7 +4,6 @@ namespace Soft4Good\ExtensionRelease;
 
 abstract class Release
 {
-
   /*
    * String $codePath Path to the extension code
    */
