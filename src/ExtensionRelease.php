@@ -26,7 +26,7 @@ abstract class Release
   protected $version;
 
   /*
-   * String $releaseBasePath path to releases folder
+   * String $releaseBasePath Path to releases folder
    */
   protected $releaseBasePath;
 
@@ -36,9 +36,9 @@ abstract class Release
   protected $excludes;
 
   /*
-   * String $releasePath path to this release's folder
+   * String $releasePath Path to this release's folder
    */
-  protected $releasePath;
+  public $releasePath;
 
   public function __construct( $releaseData = null )
   {
@@ -93,9 +93,9 @@ abstract class Release
         $oPacker = new Tholu\Packer\Packer( $sJsCode, 'None', true, true, false );
         $jsPackedCode = $oPacker->pack();
 
-        $fpJs = fopen( $jsPath, 'w+' );
-        fwrite( $fpJs, $jsPackedCode );
-        fclose( $fpJs );
+        $jsFile = fopen( $jsPath, 'w+' );
+        fwrite( $jsFile, $jsPackedCode );
+        fclose( $jsFile );
       }
       catch( \Exception $exception ) {
         throw $exception;

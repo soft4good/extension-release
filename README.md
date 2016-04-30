@@ -13,6 +13,10 @@ A package to automate browser extension releases.
 - Creates a folder with the release
 - Packs the release (ready to upload to webstore) 
 
+### Coming soon
+- Integration with Google Webstore Publish API (https://developer.chrome.com/webstore/using_webstore_api)
+- Integration with Firefox Signing API (https://olympia.readthedocs.io/en/latest/topics/api/signing.html)
+
 ## Installation
 
 Simply run `composer require soft4good/extension-release`.
@@ -22,5 +26,5 @@ Simply run `composer require soft4good/extension-release`.
 ```php
 <?php
   require 'vendor/autoload.php';
-  $release = Soft4Good\ExtensionRelease\Factory::create( './release.json' ); // see release.json file...
+  $release = Soft4Good\ExtensionRelease\Factory::create( './release.sample.json' ); // see release.json file...
 ```

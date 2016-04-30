@@ -1,0 +1,3 @@
+<?php
+  require 'vendor/autoload.php';
+  $release = Soft4Good\ExtensionRelease\Factory::create( './release.json' ); // see release.json file...
