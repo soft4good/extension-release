@@ -1,7 +1,7 @@
 ExtensionRelease
 ================
 
-A package to automate browser extension releases.
+A package to automate browser extension releases/deployments.
 
 ***Only Chrome is currently supported.***
 
