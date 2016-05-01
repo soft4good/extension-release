@@ -9,11 +9,7 @@
 				"js/bg.js", 
 				"js/popup.js"
 			],
-			"css": [],
-			"excludes": [],
-      		"package": true
+			"package": true
 		}
-	],
-	"firefox": [],
-	"safari": []
+	]
 }
