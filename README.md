@@ -1,5 +1,5 @@
-ExtensionRelease [UNDER DEVELOPMENT]
-==========
+ExtensionRelease
+================
 
 A package to automate browser extension releases.
 
