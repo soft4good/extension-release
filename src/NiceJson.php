@@ -1,6 +1,6 @@
 <?php
 
-class NiceJSON 
+class NiceJSON
 {
 	// https://github.com/GerHobbelt/nicejson-php/blob/master/nicejson.php
 	/**

@@ -17,7 +17,7 @@ class Factory
 
     $oRelease = null;
     foreach( $release as $browser => $releaseData ) {
-      $className = __NAMESPACE__ . '\\' . ucwords( $browser );
+      $className = __NAMESPACE__ . '\\' . trim( preg_replace( '/\s/', '', ucwords( $browser ) ) ); //__NAMESPACE__ . '\\' .
 
       if ( class_exists( $className ) ) {
         $oRelease = new $className( $releaseData );

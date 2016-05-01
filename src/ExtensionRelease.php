@@ -45,11 +45,11 @@ abstract class Release
       $this->releaseBasePath = trim( ( $releaseData['releases_path'] || './_releases' ),  ' /' );
       $this->codePath        = trim( ( $releaseData['path']  || '' ), ' /' );
 
-      $this->name     = $releaseData ['name']         || '';
-      $this->excludes = $releaseData ['excludes']     || [];
-      $this->js       = $releaseData ['js']           || [];
-      $this->css      = $releaseData ['css']          || [];
-      $this->version  = $releaseData ['version']      || '';
+      $this->name     = $releaseData ['name']     || '';
+      $this->excludes = $releaseData ['excludes'] || [];
+      $this->js       = $releaseData ['js']       || [];
+      $this->css      = $releaseData ['css']      || [];
+      $this->version  = $releaseData ['version']  || '';
     }
   }
 

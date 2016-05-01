@@ -1,5 +1,24 @@
 {
+    "name": "soft4good/extension-release",
+    "description": "A package to automate browser extension deployments.",
+    "keywords": ["browser", "extension", "publish", "deploy", "release", "browser extension"],
+    "homepage": "https://github.com/soft4good/extension-release",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Reinier G. Menendez",
+            "email": "reinier@soft4good.com"
+        }
+    ],
     "require": {
-        "tholu/php-packer": "^0.1.2"
+    	  "php": ">=5.3.0",
+            "tholu/php-packer": "^0.1.2"
+    },
+	  "autoload": {
+        "psr-4": {
+            "NiceJson": "src/NiceJson.php",
+            "Soft4Good\\ExtensionRelease\\": "src"
+        }
     }
-} 
+}
