@@ -46,10 +46,12 @@ class Chrome extends Release implements ReleaseInterface
     $this->packCSS();
     $this->packJS();
 
-    if ( $this->package ) { // TODO: this looks wrong
+    if ( $this->package ) {
+      // TODO: move this somewhere else ----
       $releasePathParts = explode( '/', $this->releasePath );
       $releaseName = $releasePathParts[count( $releasePathParts ) -1];
-      //ZipTools::packDir( $this->releasePath . '/', $this->releaseBasePath . "/$releaseName.zip" );
+      // -----------------------------------
+
       ExtendedZip::zipTree( $this->releasePath, $this->releaseBasePath . "/$releaseName.zip", \ZipArchive::CREATE );
     }
   }
