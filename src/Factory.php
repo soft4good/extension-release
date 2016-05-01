@@ -18,16 +18,18 @@ class Factory
     $release = null;
     if ( $releaseDefinition ) {
       foreach( $releaseDefinition as $browser => $releaseData ) {
-        $className = __NAMESPACE__ . '\\' . trim( preg_replace( '/\s/', '', ucwords( $browser ) ) );
+        if ( $releaseData ) {
+          $className = __NAMESPACE__ . '\\' . trim( preg_replace( '/\s/', '', ucwords( $browser ) ) );
 
-        if ( class_exists( $className ) ) {
-          $release = new $className( $releaseData );
-        }
-        else {
-          throw new \Exception( "$browser release is not implemented. Expected class name: $className" );
-        }
+          if ( class_exists( $className ) ) {
+            $release = new $className( $releaseData );
+          }
+          else {
+            throw new \Exception( "[$browser] release is not implemented. Expected class name: $className" );
+          }
 
-        $release->create();
+          $release->create();
+        }
       }
     }
     else {
