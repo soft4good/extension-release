@@ -17,9 +17,9 @@ class Chrome extends Release implements ReleaseInterface
   public function create()
   {
     // read manifest.json
-    $manifestPath = $this->path . "/manifest.json";
+    $manifestPath = $this->codePath . "/manifest.json";
     try {
-      $manifest = json_decode( $manifestPath );
+      $manifest = json_decode( file_get_contents( $manifestPath ), true );
     }
     catch( \Exception $exception ) {
       throw new \Exception( "manifest.json file is not found or corrupted...\n" . $exception->getMessage() );
@@ -27,7 +27,7 @@ class Chrome extends Release implements ReleaseInterface
 
     // update manifest version
     if ( !$this->version ) {
-      $this->version = $manifest['version'] || '';
+      $this->version = $manifest['version'] ? $manifest['version'] : 0;
       $manifest['version'] = $this->autoIncrementVersion();
     }
 
@@ -37,6 +37,9 @@ class Chrome extends Release implements ReleaseInterface
     fclose( $manifestFile );
 
     // copy files to release folder
+    if ( !$this->name ) {
+      $this->name = $manifest['short_name'];
+    }
     $this->prepareDir();
 
     // pack JS and CSS

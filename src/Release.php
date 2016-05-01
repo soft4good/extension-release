@@ -39,47 +39,66 @@ abstract class Release
    */
   public $releasePath;
 
+  /*
+   * String $name Extension name, used as release directory name: <name>-<version> format
+   */
+  public $name;
+
   public function __construct( $releaseData = null )
   {
     if ( $releaseData  ) {
-      $this->releaseBasePath = trim( ( $releaseData['releases_path'] || './_releases' ),  ' /' );
-      $this->codePath        = trim( ( $releaseData['path']  || '' ), ' /' );
+      $this->releaseBasePath = $releaseData['releases_path'] ? trim( $releaseData['releases_path'], ' /' ) : './_releases';
+      $this->codePath        = $releaseData['path'] ? trim( ( $releaseData['path'] ), ' /' ) : '';
 
-      $this->name     = $releaseData ['name']     || '';
-      $this->excludes = $releaseData ['excludes'] || [];
-      $this->js       = $releaseData ['js']       || [];
-      $this->css      = $releaseData ['css']      || [];
-      $this->version  = $releaseData ['version']  || '';
+      $this->name     = $releaseData['name']     ? $releaseData['name']     : '';
+      $this->excludes = $releaseData['excludes'] ? $releaseData['excludes'] : [];
+      $this->js       = $releaseData['js']       ? $releaseData['js']       : [];
+      $this->css      = $releaseData['css']      ? $releaseData['css']      : [];
+      $this->version  = $releaseData['version']  ? $releaseData['version']  :  0;
     }
   }
 
   // http://php.net/manual/de/function.copy.php
-  private function recurse_copy( $src,$dst ) { // TODO: refactor this...
-    $dir = opendir($src);
-    mkdir($dst);
+  private function recurse_copy( $src, $dst ) { // TODO: refactor this...
+    $dir = opendir( $src );
+
+    if ( file_exists( $dst ) ) {
+      throw new \Exception( "Release already exists. Path: $dst" );
+    }
+    mkdir( $dst, 0777, true );
+
     while(false !== ( $file = readdir($dir)) ) {
       if (( $file != '.' ) && ( $file != '..' )) {
         if ( is_dir($src . '/' . $file) ) {
-          recurse_copy($src . '/' . $file,$dst . '/' . $file);
+          $this->recurse_copy($src . '/' . $file,$dst . '/' . $file);
         }
         else {
-          copy($src . '/' . $file,$dst . '/' . $file);
+          copy( $src . '/' . $file, $dst . '/' . $file );
         }
       }
     }
     closedir($dir);
   }
 
-  protected function prepareDir( $name )
+  protected function prepareDir( $name = '' )
   {
-    $name = preg_replace( '/[^A-Za-z0-0]/s', '-', trim( $name, ' -' ) );
+    if ( $name ) {
+      $name = preg_replace( '/[^A-Za-z0-0]/s', '-', trim( $name, ' -' ) );
+    }
+    else {
+      $name = $this->name;
+    }
 
-    $this->releasePath = $this->releaseBasePath . '/' . $name  . '-' . $this->version;
+    // construct release path
+    $this->releasePath  = $this->releaseBasePath . '/';
+    $this->releasePath .= $name ? $name  . '-' : '';
+    $this->releasePath .= $this->version;
+
     try {
       $this->recurse_copy( $this->codePath, $this->releasePath );
     }
     catch( \Exception $exception ) {
-      throw $exception;
+      die( $exception->getMessage() );
     }
   }
 
@@ -89,7 +108,7 @@ abstract class Release
       $jsPath = $this->releasePath . '/' . $jsPath;
       try {
         $sJsCode = file_get_contents( $jsPath );
-        $oPacker = new Tholu\Packer\Packer( $sJsCode, 'None', true, true, false );
+        $oPacker = new \Tholu\Packer\Packer( $sJsCode, 'None', true, true, false );
         $jsPackedCode = $oPacker->pack();
 
         $jsFile = fopen( $jsPath, 'w+' );
@@ -109,17 +128,11 @@ abstract class Release
 
   protected function autoIncrementVersion()
   {
-    $versionParts = explode( '.', $this->version );
-    $versionParts = array_pad( $versionParts, 4, '0' ); // X.X.X.X version format
+    // only the first part can increase infinitely
+    $this->version = (int)( str_replace( '.', '', $this->version ) ) + 1;
+    $this->version = str_pad( $this->version, 4, '0', STR_PAD_LEFT );
 
-    // only the first value can increase infinitely
-    for( $i = 0; $i < count( $versionParts ) - 2; $i++ ) {
-      $increment = $versionParts[$i + 1] == 9 ? 1 : 0;
-      $versionParts[$i]     += $increment;
-      $versionParts[$i + 1] += $increment ? -9 : 1;
-    }
-
-    $this->version = implode( '.', $versionParts );
+    $this->version = trim( substr( $this->version, 0, strlen( $this->version ) - 4 ) . preg_replace( '/([0-9])/', '.\1', substr( $this->version, strlen( $this->version ) - 4, 4 ) ), '.' );
 
     return $this->version;
   }
