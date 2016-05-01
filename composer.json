@@ -17,7 +17,6 @@
     },
 	  "autoload": {
         "psr-4": {
-            "NiceJson\\": "src/NiceJson.php",
             "Soft4Good\\ExtensionRelease\\": "src"
         }
     }

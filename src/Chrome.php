@@ -33,7 +33,7 @@ class Chrome extends Release implements ReleaseInterface
 
     // write manifest.json
     $manifestFile = fopen( $manifestPath, 'w+' );
-    fwrite( $manifestFile, \NiceJSON::format( json_encode( $manifest ) ) );
+    fwrite( $manifestFile, NiceJson::format( json_encode( $manifest ) ) );
     fclose( $manifestFile );
 
     // copy files to release folder

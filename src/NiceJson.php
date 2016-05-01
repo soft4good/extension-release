@@ -1,6 +1,8 @@
 <?php
 
-class NiceJSON
+namespace Soft4Good\ExtensionRelease;
+
+class NiceJson
 {
 	// https://github.com/GerHobbelt/nicejson-php/blob/master/nicejson.php
 	/**
