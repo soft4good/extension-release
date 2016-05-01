@@ -39,7 +39,5 @@ class Factory
     else {
       throw new \Exception( "Invalid releases definition." );
     }
-
-    return $release;
   }
 }

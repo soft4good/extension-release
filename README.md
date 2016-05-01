@@ -31,7 +31,7 @@ Simply run `composer require soft4good/extension-release`.
   require 'vendor/autoload.php';
 
   try {
-    $release = Soft4Good\ExtensionRelease\Factory::create( './release.sample.json' );
+    Soft4Good\ExtensionRelease\Factory::create( './release.sample.json' );
   }
   catch( Exception $exception ) {
     die( $exception->getMessage() );
