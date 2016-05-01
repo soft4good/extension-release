@@ -40,5 +40,5 @@ Simply run `composer require soft4good/extension-release`.
 
 ### Command Line
 ```
-$ php path/to/extension-release.php 'path/to/release.json'
+$ php path/to/extension-release.php path/to/release.json
 ```
