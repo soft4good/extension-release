@@ -1,16 +1,19 @@
 {
-	"chrome": {
-		"releases_path": "./_releases/chrome",
-		"name": "my-extension",
-		"path": "./chrome",
-		"version": null,
-		"js": [
-			"js/bg.js", 
-			"js/popup.js"
-		],
-		"css": [],
-		"excludes": []
-	},
-	"firefox": {},
-	"safari": {}
+	"chrome": [
+		{
+			"releases_path": "./_releases/chrome",
+			"name": "myextension",
+			"path": "./extensions/chrome",
+			"version": null,
+			"js": [
+				"js/bg.js", 
+				"js/popup.js"
+			],
+			"css": [],
+			"excludes": [],
+      		"package": true
+		}
+	],
+	"firefox": [],
+	"safari": []
 }

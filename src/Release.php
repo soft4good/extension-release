@@ -2,7 +2,7 @@
 
 namespace Soft4Good\ExtensionRelease;
 
-abstract class Release
+abstract class Release implements ReleaseInterface
 {
   /*
    * String $codePath Path to the extension code
@@ -44,6 +44,11 @@ abstract class Release
    */
   public $name;
 
+  /*
+   * Boolean $package If we should package the extension
+   */
+  protected $package = false;
+
   public function __construct( $releaseData = null )
   {
     if ( $releaseData  ) {
@@ -55,11 +60,13 @@ abstract class Release
       $this->js       = $releaseData['js']       ? $releaseData['js']       : [];
       $this->css      = $releaseData['css']      ? $releaseData['css']      : [];
       $this->version  = $releaseData['version']  ? $releaseData['version']  :  0;
+      $this->package  = $releaseData['package']  ? $releaseData['package']  :  false;
     }
   }
 
   // http://php.net/manual/de/function.copy.php
-  private function recurse_copy( $src, $dst ) { // TODO: refactor this...
+  private function recurse_copy( $src, $dst )  // TODO: refactor this...
+  {
     $dir = opendir( $src );
 
     if ( file_exists( $dst ) ) {
@@ -67,7 +74,7 @@ abstract class Release
     }
     mkdir( $dst, 0777, true );
 
-    while(false !== ( $file = readdir($dir)) ) {
+    while( false !== ( $file = readdir( $dir ) ) ) {
       if (( $file != '.' ) && ( $file != '..' )) {
         if ( is_dir($src . '/' . $file) ) {
           $this->recurse_copy($src . '/' . $file,$dst . '/' . $file);
@@ -98,7 +105,7 @@ abstract class Release
       $this->recurse_copy( $this->codePath, $this->releasePath );
     }
     catch( \Exception $exception ) {
-      die( $exception->getMessage() );
+      throw $exception;
     }
   }
 
@@ -128,11 +135,10 @@ abstract class Release
 
   protected function autoIncrementVersion()
   {
-    // only the first part can increase infinitely
+    // only the first part increases infinitely
     $this->version = (int)( str_replace( '.', '', $this->version ) ) + 1;
     $this->version = str_pad( $this->version, 4, '0', STR_PAD_LEFT );
-
-    $this->version = trim( substr( $this->version, 0, strlen( $this->version ) - 4 ) . preg_replace( '/([0-9])/', '.\1', substr( $this->version, strlen( $this->version ) - 4, 4 ) ), '.' );
+    $this->version = preg_replace( '/^([0-9]+)([0-9]{1})([0-9]{1})([0-9]{1})$/', '\1.\2.\3.\4', $this->version );
 
     return $this->version;
   }
