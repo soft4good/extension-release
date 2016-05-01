@@ -31,9 +31,3 @@ Simply run `composer require soft4good/extension-release`.
   require 'vendor/autoload.php';
   $release = Soft4Good\ExtensionRelease\Factory::create( './release.sample.json' ); // see release.json file...
 ```
-
-### Command Line
-
-```
-# php extension-release release.json
-```
