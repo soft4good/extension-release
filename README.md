@@ -15,8 +15,6 @@ A package to automate browser extension releases/deployments.
 
 ### Coming soon
 
-hehe...
-
 - Integration with Google Webstore Publish API (https://developer.chrome.com/webstore/using_webstore_api)
 - Integration with Firefox Signing API (https://olympia.readthedocs.io/en/latest/topics/api/signing.html)
 
