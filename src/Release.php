@@ -4,6 +4,8 @@ namespace Soft4Good\ExtensionRelease;
 
 abstract class Release implements ReleaseInterface
 {
+  const OBUSCATOR_IO_OBFUSCATOR = 'ObfuscatorIO';
+  const TOLU_PACKER_OBFUSCATOR  = 'TholuPacker';
   /*
    * String $codePath Path to the extension code
    */
@@ -49,18 +51,24 @@ abstract class Release implements ReleaseInterface
    */
   protected $package = false;
 
+  /*
+   * String $obfuscator Obfuscator to use
+   */
+  protected $obfuscator = 'TholuPacker';
+
   public function __construct( $releaseData = null )
   {
     if ( $releaseData  ) {
-      $this->releaseBasePath = $releaseData['releases_path'] ? trim( $releaseData['releases_path'], ' /' ) : './_releases';
-      $this->codePath        = $releaseData['path'] ? trim( ( $releaseData['path'] ), ' /' ) : '';
+      $this->releaseBasePath = $releaseData['releases_path'] ? rtrim( $releaseData['releases_path'], ' /' ) : './_releases';
+      $this->codePath        = $releaseData['path'] ? rtrim( ( $releaseData['path'] ), ' /' ) : '';
 
-      $this->name     = $releaseData['name']     ? $releaseData['name']     : '';
-      $this->excludes = $releaseData['excludes'] ? $releaseData['excludes'] : [];
-      $this->js       = $releaseData['js']       ? $releaseData['js']       : [];
-      $this->css      = $releaseData['css']      ? $releaseData['css']      : [];
-      $this->version  = $releaseData['version']  ? $releaseData['version']  :  0;
-      $this->package  = $releaseData['package']  ? $releaseData['package']  :  false;
+      $this->name       = $releaseData['name']        ? $releaseData['name']       : '';
+      $this->excludes   = $releaseData['excludes']    ? $releaseData['excludes']   : [];
+      $this->js         = $releaseData['js']          ? $releaseData['js']         : [];
+      $this->css        = $releaseData['css']         ? $releaseData['css']        : [];
+      $this->version    = $releaseData['version']     ? $releaseData['version']    : 0;
+      $this->package    = $releaseData['package']     ? $releaseData['package']    : false;
+      $this->obfuscator = $releaseData['obfuscator']  ? $releaseData['obfuscator'] : '';
     }
   }
 
@@ -114,9 +122,12 @@ abstract class Release implements ReleaseInterface
     foreach( $this->js as $jsPath ) {
       $jsPath = $this->releasePath . '/' . $jsPath;
       try {
-        $sJsCode = file_get_contents( $jsPath );
-        $oPacker = new \Tholu\Packer\Packer( $sJsCode, 'None', true, true, false );
-        $jsPackedCode = $oPacker->pack();
+        $jsPackedCode = $jsCode = file_get_contents( $jsPath );
+        
+        $obfuscatorFn = "obfuscateWith" . $this->obfuscator;
+        if (method_exists($this, $obfuscatorFn)) {
+          $jsPackedCode = call_user_func_array([$this, $obfuscatorFn], [$jsCode]);
+        }
 
         $jsFile = fopen( $jsPath, 'w+' );
         fwrite( $jsFile, $jsPackedCode );
@@ -141,6 +152,17 @@ abstract class Release implements ReleaseInterface
     $this->version = preg_replace( '/^([0-9]+)([0-9]{1})([0-9]{1})([0-9]{1})$/', '\1.\2.\3.\4', $this->version );
 
     return $this->version;
+  }
+
+  private function obfuscateWithObfuscatorIO($jsCode)
+  {
+    return \ObfuscatorIO\Obfuscator::obfuscate($jsCode);
+  }
+
+  private function obfuscateWithTholuPacker($jsCode)
+  {
+    $packer = new \Tholu\Packer\Packer($jsCode, 'None', false, false, false );
+    return $packer->pack();
   }
 
 } // Soft4Good\ExtensionRelease\Release

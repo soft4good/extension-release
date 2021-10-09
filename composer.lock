@@ -1,11 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "810c4af6efcc1ff53dc0127fd68dd45f",
-    "content-hash": "e08e49224d9f7b548fed757ba4067ba9",
+    "content-hash": "f1647a171ebdb647b0af8fa55e545f06",
     "packages": [
         {
             "name": "tholu/php-packer",
@@ -56,7 +55,11 @@
                 "obfuscate",
                 "uglify"
             ],
-            "time": "2015-11-18 12:40:36"
+            "support": {
+                "issues": "https://github.com/tholu/php-packer/issues",
+                "source": "https://github.com/tholu/php-packer/tree/master"
+            },
+            "time": "2015-11-18T12:40:36+00:00"
         }
     ],
     "packages-dev": [],
@@ -65,6 +68,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": []
+    "platform": {
+        "php": ">=5.3.0"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.1.0"
 }

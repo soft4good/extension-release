@@ -1,5 +1,6 @@
 <?php // TODO: more options...
-
+  
+  require 'lib/ObfuscatorIO/ObfuscatorIO.php';
   require 'vendor/autoload.php';
 
   if ( !$argv[1] )  {
